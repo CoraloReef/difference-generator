@@ -8,6 +8,10 @@
 
 [![asciicast](https://asciinema.org/a/DzmnXXJ2ewCnk4eA1wDwvBvsO.svg)](https://asciinema.org/a/DzmnXXJ2ewCnk4eA1wDwvBvsO)
 
-## Install and liner difference
+## Install and run liner JSON difference generator
 
 [![asciicast](https://asciinema.org/a/PpC3073d10dz9knG2pUx9w7Td.svg)](https://asciinema.org/a/PpC3073d10dz9knG2pUx9w7Td)
+
+## Instal and run liner Yaml difference generator
+
+[![asciicast](https://asciinema.org/a/gB3ANM0v2HPUBY6Y0nT9E27rI.svg)](https://asciinema.org/a/gB3ANM0v2HPUBY6Y0nT9E27rI)

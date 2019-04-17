@@ -2,12 +2,14 @@
 
 import commander from 'commander';
 import fs from 'fs';
-import { has } from 'lodash/fp';
+import _ from 'lodash/fp';
+import path from 'path';
 import info from '../../package.json';
+import parsers from '../parsers';
 
 const getObjectPathFile = (pathFile) => {
   const file = fs.readFileSync(pathFile, 'utf-8');
-  return JSON.parse(file);
+  return parsers(path.extname(pathFile), file);
 };
 
 const genDiff = (firstPathFile, secondPathFile) => {
@@ -17,14 +19,14 @@ const genDiff = (firstPathFile, secondPathFile) => {
   const keysFiles = [
     ...Object.keys(objFirstFile),
     ...Object.keys(objSecondFile)
-      .filter(key => !has(key, objFirstFile)),
+      .filter(key => !_.has(key, objFirstFile)),
   ];
 
   const difference = keysFiles.reduce((acc, key) => {
-    if (!has(key, objFirstFile) && has(key, objSecondFile)) {
+    if (!_.has(key, objFirstFile) && _.has(key, objSecondFile)) {
       return `${acc}  + ${key}: ${objSecondFile[key]}\n`;
     }
-    if (has(key, objFirstFile) && !has(key, objSecondFile)) {
+    if (_.has(key, objFirstFile) && !_.has(key, objSecondFile)) {
       return `${acc}  - ${key}: ${objFirstFile[key]}\n`;
     }
     if (objFirstFile[key] === objSecondFile[key]) {
