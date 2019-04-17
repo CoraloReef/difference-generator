@@ -10,9 +10,6 @@ build:
 test:
 	npm test
 
-test-coverage:
-	npm test --coverage
-
 lint:
 	npx eslint .
 
@@ -21,3 +18,6 @@ publish:
 
 gendiff:
 	npx babel-node src/bin/gendiff.js
+
+test-coverage:
+	npm test -- --coverage

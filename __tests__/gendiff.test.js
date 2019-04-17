@@ -1,5 +1,5 @@
 import fs from 'fs';
-import genDiff from '../src/bin/gendiff';
+import genDiff from '../src';
 
 const filesPath = '__tests__/__fixtures__/';
 
