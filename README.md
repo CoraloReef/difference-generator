@@ -12,6 +12,10 @@
 
 [![asciicast](https://asciinema.org/a/PpC3073d10dz9knG2pUx9w7Td.svg)](https://asciinema.org/a/PpC3073d10dz9knG2pUx9w7Td)
 
-## Instal and run liner Yaml difference generator
+## Install and run liner Yaml difference generator
 
 [![asciicast](https://asciinema.org/a/gB3ANM0v2HPUBY6Y0nT9E27rI.svg)](https://asciinema.org/a/gB3ANM0v2HPUBY6Y0nT9E27rI)
+
+## Install and run liner ini difference generator
+
+[![asciicast](https://asciinema.org/a/uOEpr96YHxJ45bxuszkI5Gxyl.svg)](https://asciinema.org/a/uOEpr96YHxJ45bxuszkI5Gxyl)
