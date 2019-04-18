@@ -32,14 +32,17 @@ const getNod = (objFirstFile, objSecondFile) => {
 const render = (ast) => {
   const result = _.keys(ast).reduce((acc, key) => {
     const item = {
-      added: `+ ${key}: ${ast[key].value}`,
-      removed: `- ${key}: ${ast[key].value}`,
-      notChanged: `  ${key}: ${ast[key].value}`,
-      changed: `+ ${key}: ${ast[key].value[1]}\n  - ${key}: ${ast[key].value[0]}`,
+      added: `  + ${key}: ${ast[key].value}`,
+      removed: `  - ${key}: ${ast[key].value}`,
+      notChanged: `    ${key}: ${ast[key].value}`,
+      changed: [
+        `  + ${key}: ${ast[key].value[1]}`,
+        `  - ${key}: ${ast[key].value[0]}`,
+      ],
     };
-    return `${acc}  ${(item[ast[key].status])}\n`;
-  }, '');
-  return `{\n${result}}`;
+    return [...acc, (item[ast[key].status])];
+  }, []);
+  return ['{', ..._.flatten(result), '}'].join('\n');
 };
 
 const genDiff = (firstPathFile, secondPathFile) => {
