@@ -19,3 +19,7 @@
 ## Install and run liner ini difference generator
 
 [![asciicast](https://asciinema.org/a/uOEpr96YHxJ45bxuszkI5Gxyl.svg)](https://asciinema.org/a/uOEpr96YHxJ45bxuszkI5Gxyl)
+
+## Install and run Tree difference generator
+
+[![asciicast](https://asciinema.org/a/ARnL2Fc6ui7KGxlH99inurMkN.svg)](https://asciinema.org/a/ARnL2Fc6ui7KGxlH99inurMkN)
