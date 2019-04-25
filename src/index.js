@@ -12,8 +12,8 @@ const getIndent = depth => '  '.repeat(depth);
 
 const stringify = (value, depth) => {
   if (typeof value === 'object') {
-    const lines = Object.keys(value).reduce((acc, key) => [...acc, `${getIndent(depth + 4)}${key}: ${value[key]}`], []);
-    return `{\n${lines.join('\n')}\n${getIndent(depth + 2)}}`;
+    const lines = Object.keys(value).map((key) => `${getIndent(depth + 4)}${key}: ${value[key]}\n`);
+    return `{\n${lines}${getIndent(depth + 2)}}`;
   }
   return value;
 };
@@ -46,23 +46,25 @@ const getAst = (objFirstFile, objSecondFile) => {
   }, {});
 };
 
-const render = (ast, depth = 2) => {
-  const lines = _.keys(ast).reduce((acc, key) => {
-    const { children, value, status } = ast[key];
+const render = (ast) => {
+  const getLines = (nodes, depth = 1) => _.keys(nodes).map((key) => {
+    const { children, value, status } = nodes[key];
 
     if (children !== undefined) {
-      return [...acc, `${getIndent(depth)}${key}: ${render(children)}`];
+      return `${getIndent(depth + 1)}${key}: {\n${_.flatten(getLines(children, depth + 1)).join('\n')}\n${getIndent(depth + 1)}}`;
     }
 
-    const item = {
+    const line = {
       added: `+ ${key}: ${stringify(value, depth)}`,
       removed: `- ${key}: ${stringify(value, depth)}`,
       notChanged: `  ${key}: ${stringify(value, depth)}`,
-      changed: `+ ${key}: ${stringify(value.new, depth)}\n${getIndent(depth + 1)}- ${key}: ${stringify(value.old, depth)}`,
+      changed: [`+ ${key}: ${stringify(value.new, depth)}`, `- ${key}: ${stringify(value.old, depth)}`],
     };
-    return [...acc, `${getIndent(depth + 1)}${item[status]}`];
-  }, []);
-  return _.flatten(['{', ...lines, '}']).join('\n');
+    return `${getIndent(depth + 1)}${line[status]}`;
+  });
+
+  const lines = (_.flatten(getLines(ast))).join('\n');
+  return `{\n${lines}\n}`;
 };
 
 const genDiff = (firstPathFile, secondPathFile) => {
