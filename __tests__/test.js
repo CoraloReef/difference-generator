@@ -21,3 +21,22 @@ describe('test liner difference', () => {
     expect(genDiff(before, after)).toBe(result);
   });
 });
+
+describe('test tree difference', () => {
+  const resultTree = fs.readFileSync(`${filesPath}resultTree.txt`, 'utf-8');
+
+  const beforeTreeJson = `${filesPath}beforeTree.json`;
+  const afterTreeJson = `${filesPath}afterTree.json`;
+  const beforeTreeYaml = `${filesPath}beforeTree.yml`;
+  const afterTreeYaml = `${filesPath}afterTree.yml`;
+  const beforeTreeIni = `${filesPath}beforeTree.ini`;
+  const afterTreeIni = `${filesPath}afterTree.ini`;
+
+  test.each([
+    [beforeTreeJson, afterTreeJson],
+    [beforeTreeYaml, afterTreeYaml],
+    [beforeTreeIni, afterTreeIni],
+  ])('liner difference (%s, %s)', (before, after) => {
+    expect(genDiff(before, after)).toBe(resultTree);
+  });
+});

@@ -8,48 +8,70 @@ const getObjectPathFile = (pathFile) => {
   return parsers(path.extname(pathFile), file);
 };
 
-const getNod = (objFirstFile, objSecondFile) => {
+const getIndent = depth => '  '.repeat(depth);
+
+const stringify = (value, depth) => {
+  if (typeof value === 'object') {
+    const lines = Object.keys(value).map(key => `${getIndent(depth + 4)}${key}: ${value[key]}\n`);
+    return `{\n${lines}${getIndent(depth + 2)}}`;
+  }
+  return value;
+};
+
+const getAst = (objFirstFile, objSecondFile) => {
   const keysFiles = [
     ...Object.keys(objFirstFile),
     ...Object.keys(objSecondFile)
       .filter(key => !_.has(key, objFirstFile)),
-  ];
+  ].sort();
 
   return keysFiles.reduce((acc, key) => {
+    const valueFirst = objFirstFile[key];
+    const valueSecond = objSecondFile[key];
+
+    if (_.has(key, objFirstFile) && _.has(key, objSecondFile)) {
+      if (valueFirst === valueSecond) {
+        return { ...acc, [key]: { value: valueFirst, status: 'notChanged' } };
+      }
+      if (typeof valueFirst === 'object' && typeof valueSecond === 'object') {
+        return { ...acc, [key]: { children: getAst(valueFirst, valueSecond) } };
+      }
+      return { ...acc, [key]: { value: { old: valueFirst, new: valueSecond }, status: 'changed' } };
+    }
     if (!_.has(key, objFirstFile) && _.has(key, objSecondFile)) {
-      return { ...acc, [key]: { value: objSecondFile[key], status: 'added' } };
+      return { ...acc, [key]: { value: valueSecond, status: 'added' } };
     }
-    if (_.has(key, objFirstFile) && !_.has(key, objSecondFile)) {
-      return { ...acc, [key]: { value: objFirstFile[key], status: 'removed' } };
-    }
-    if (objFirstFile[key] === objSecondFile[key]) {
-      return { ...acc, [key]: { value: objFirstFile[key], status: 'notChanged' } };
-    }
-    return { ...acc, [key]: { value: [objFirstFile[key], objSecondFile[key]], status: 'changed' } };
+
+    return { ...acc, [key]: { value: valueFirst, status: 'removed' } };
   }, {});
 };
 
 const render = (ast) => {
-  const result = _.keys(ast).reduce((acc, key) => {
-    const item = {
-      added: `  + ${key}: ${ast[key].value}`,
-      removed: `  - ${key}: ${ast[key].value}`,
-      notChanged: `    ${key}: ${ast[key].value}`,
-      changed: [
-        `  + ${key}: ${ast[key].value[1]}`,
-        `  - ${key}: ${ast[key].value[0]}`,
-      ],
+  const getLines = (nodes, depth = 0) => _.keys(nodes).map((key) => {
+    const { children, value, status } = nodes[key];
+
+    if (children !== undefined) {
+      return `${getIndent(depth + 2)}${key}: {\n${_.flatten(getLines(children, depth + 2)).join('\n')}\n${getIndent(depth + 2)}}`;
+    }
+
+    const line = {
+      added: `+ ${key}: ${stringify(value, depth)}`,
+      removed: `- ${key}: ${stringify(value, depth)}`,
+      notChanged: `  ${key}: ${stringify(value, depth)}`,
+      changed: [`- ${key}: ${stringify(value.old, depth)}`, `+ ${key}: ${stringify(value.new, depth)}`]
+        .join(`\n${getIndent(depth + 1)}`),
     };
-    return [...acc, (item[ast[key].status])];
-  }, []);
-  return ['{', ..._.flatten(result), '}'].join('\n');
+    return `${getIndent(depth + 1)}${line[status]}`;
+  });
+
+  const lines = _.flatten(getLines(ast)).join('\n');
+  return `{\n${lines}\n}`;
 };
 
 const genDiff = (firstPathFile, secondPathFile) => {
   const objFirstFile = getObjectPathFile(firstPathFile);
   const objSecondFile = getObjectPathFile(secondPathFile);
-
-  const ast = getNod(objFirstFile, objSecondFile);
+  const ast = getAst(objFirstFile, objSecondFile);
   return render(ast);
 };
 
