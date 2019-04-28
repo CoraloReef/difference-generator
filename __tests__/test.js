@@ -3,7 +3,7 @@ import genDiff from '../src';
 
 const filesPath = '__tests__/__fixtures__/';
 
-describe('test liner difference', () => {
+describe('test liner difference in cascade format', () => {
   const result = fs.readFileSync(`${filesPath}result.txt`, 'utf-8');
 
   const beforeJson = `${filesPath}before.json`;
@@ -22,7 +22,7 @@ describe('test liner difference', () => {
   });
 });
 
-describe('test tree difference', () => {
+describe('test tree difference in cascade format', () => {
   const resultTree = fs.readFileSync(`${filesPath}resultTree.txt`, 'utf-8');
 
   const beforeTreeJson = `${filesPath}beforeTree.json`;
@@ -38,5 +38,24 @@ describe('test tree difference', () => {
     [beforeTreeIni, afterTreeIni],
   ])('liner difference (%s, %s)', (before, after) => {
     expect(genDiff(before, after)).toBe(resultTree);
+  });
+});
+
+describe('test tree difference in plain format', () => {
+  const resultTreePlain = fs.readFileSync(`${filesPath}resultPlain.txt`, 'utf-8');
+
+  const beforeTreeJson = `${filesPath}beforeTree.json`;
+  const afterTreeJson = `${filesPath}afterTree.json`;
+  const beforeTreeYaml = `${filesPath}beforeTree.yml`;
+  const afterTreeYaml = `${filesPath}afterTree.yml`;
+  const beforeTreeIni = `${filesPath}beforeTree.ini`;
+  const afterTreeIni = `${filesPath}afterTree.ini`;
+
+  test.each([
+    [beforeTreeJson, afterTreeJson],
+    [beforeTreeYaml, afterTreeYaml],
+    [beforeTreeIni, afterTreeIni],
+  ])('liner difference (%s, %s)', (before, after) => {
+    expect(genDiff(before, after, 'plain')).toBe(resultTreePlain);
   });
 });
