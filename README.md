@@ -27,3 +27,7 @@
 ## Install and run Tree difference generator in Plain format
 
 [![asciicast](https://asciinema.org/a/VZPVDnJEFyQyMIbV6dBgDZRZx.svg)](https://asciinema.org/a/VZPVDnJEFyQyMIbV6dBgDZRZx)
+
+## Install and run Tree difference generator in JSON format
+
+[![asciicast](https://asciinema.org/a/Q3EQEhd1VOyjoWHaUu516UcLe.svg)](https://asciinema.org/a/Q3EQEhd1VOyjoWHaUu516UcLe)
