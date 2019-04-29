@@ -5,22 +5,22 @@ import render from './formatters';
 import parsers from './parsers';
 
 const getObjectPathFile = (pathFile) => {
-  const file = fs.readFileSync(pathFile, 'utf-8');
-  return parsers(path.extname(pathFile), file);
+  const fileContent = fs.readFileSync(pathFile, 'utf-8');
+  return parsers(path.extname(pathFile), fileContent);
 };
 
-const getAst = (objFirstFile, objSecondFile) => {
-  const keysFiles = [
-    ...Object.keys(objFirstFile),
-    ...Object.keys(objSecondFile)
-      .filter(key => !_.has(key, objFirstFile)),
+const getAst = (objFirst, objSecond) => {
+  const objKeys = [
+    ...Object.keys(objFirst),
+    ...Object.keys(objSecond)
+      .filter(key => !_.has(key, objFirst)),
   ].sort();
 
-  return keysFiles.reduce((acc, key) => {
-    const valueFirst = objFirstFile[key];
-    const valueSecond = objSecondFile[key];
+  return objKeys.reduce((acc, key) => {
+    const valueFirst = objFirst[key];
+    const valueSecond = objSecond[key];
 
-    if (_.has(key, objFirstFile) && _.has(key, objSecondFile)) {
+    if (_.has(key, objFirst) && _.has(key, objSecond)) {
       if (valueFirst === valueSecond) {
         return { ...acc, [key]: { value: valueFirst, status: 'notChanged' } };
       }
@@ -29,7 +29,7 @@ const getAst = (objFirstFile, objSecondFile) => {
       }
       return { ...acc, [key]: { value: { old: valueFirst, new: valueSecond }, status: 'changed' } };
     }
-    if (!_.has(key, objFirstFile) && _.has(key, objSecondFile)) {
+    if (!_.has(key, objFirst) && _.has(key, objSecond)) {
       return { ...acc, [key]: { value: valueSecond, status: 'added' } };
     }
 
@@ -38,8 +38,8 @@ const getAst = (objFirstFile, objSecondFile) => {
 };
 
 export default (firstPathFile, secondPathFile, outputFormat = 'cascade') => {
-  const objFirstFile = getObjectPathFile(firstPathFile);
-  const objSecondFile = getObjectPathFile(secondPathFile);
-  const ast = getAst(objFirstFile, objSecondFile);
+  const objFirst = getObjectPathFile(firstPathFile);
+  const objSecond = getObjectPathFile(secondPathFile);
+  const ast = getAst(objFirst, objSecond);
   return render(ast, outputFormat);
 };
