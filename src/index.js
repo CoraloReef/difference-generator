@@ -10,31 +10,47 @@ const getObjectPathFile = (pathFile) => {
 };
 
 const getAst = (objFirst, objSecond) => {
-  const objKeys = [
-    ...Object.keys(objFirst),
-    ...Object.keys(objSecond)
-      .filter(key => !_.has(key, objFirst)),
-  ].sort();
+  const objKeys = _.union(Object.keys(objFirst), Object.keys(objSecond)).sort();
 
-  return objKeys.reduce((acc, key) => {
+  return objKeys.map((key) => {
     const valueFirst = objFirst[key];
     const valueSecond = objSecond[key];
 
     if (_.has(key, objFirst) && _.has(key, objSecond)) {
       if (valueFirst === valueSecond) {
-        return { ...acc, [key]: { value: valueFirst, status: 'notChanged' } };
+        return {
+          key,
+          status: 'notChanged',
+          value: valueFirst,
+        };
       }
       if (typeof valueFirst === 'object' && typeof valueSecond === 'object') {
-        return { ...acc, [key]: { children: getAst(valueFirst, valueSecond) } };
+        return {
+          key,
+          status: 'parent',
+          children: getAst(valueFirst, valueSecond),
+        };
       }
-      return { ...acc, [key]: { value: { old: valueFirst, new: valueSecond }, status: 'changed' } };
+      return {
+        key,
+        status: 'changed',
+        valueOld: valueFirst,
+        valueNew: valueSecond,
+      };
     }
     if (!_.has(key, objFirst) && _.has(key, objSecond)) {
-      return { ...acc, [key]: { value: valueSecond, status: 'added' } };
+      return {
+        key,
+        status: 'added',
+        value: valueSecond,
+      };
     }
-
-    return { ...acc, [key]: { value: valueFirst, status: 'removed' } };
-  }, {});
+    return {
+      key,
+      status: 'removed',
+      value: valueFirst,
+    };
+  });
 };
 
 export default (firstPathFile, secondPathFile, outputFormat = 'cascade') => {
