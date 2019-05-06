@@ -1,33 +1,35 @@
 # Difference Calculator
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/a3f977a8261b4408be88/maintainability)](https://codeclimate.com/github/CoraloReef/project-lvl2-s463/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/a3f977a8261b4408be88/test_coverage)](https://codeclimate.com/github/CoraloReef/project-lvl2-s463/test_coverage)
-[![Build Status](https://travis-ci.org/CoraloReef/project-lvl2-s463.svg?branch=master)](https://travis-ci.org/CoraloReef/project-lvl2-s463)
+### Description
+Utility to find differences in configuration files.
 
-## Install
+Utility features:
 
-[![asciicast](https://asciinema.org/a/DzmnXXJ2ewCnk4eA1wDwvBvsO.svg)](https://asciinema.org/a/DzmnXXJ2ewCnk4eA1wDwvBvsO)
+* Format support json, yaml, ini
 
-## Install and run liner JSON difference generator
+* Generating a report in the form of plain text, standard and json
+ 
+### Installation
 
-[![asciicast](https://asciinema.org/a/PpC3073d10dz9knG2pUx9w7Td.svg)](https://asciinema.org/a/PpC3073d10dz9knG2pUx9w7Td)
+```
+npm install difference-calculator-coraloreef -global
+```
 
-## Install and run liner Yaml difference generator
+### Usage
 
-[![asciicast](https://asciinema.org/a/gB3ANM0v2HPUBY6Y0nT9E27rI.svg)](https://asciinema.org/a/gB3ANM0v2HPUBY6Y0nT9E27rI)
+```
+gendiff --format json before.yaml after.yaml
+```
 
-## Install and run liner ini difference generator
+### Help
 
-[![asciicast](https://asciinema.org/a/uOEpr96YHxJ45bxuszkI5Gxyl.svg)](https://asciinema.org/a/uOEpr96YHxJ45bxuszkI5Gxyl)
+```
+gendiff -h
+Usage: gendiff [options] <firstConfig> <secondConfig>
 
-## Install and run Tree difference generator
+Compares two configuration files and shows a difference.
 
-[![asciicast](https://asciinema.org/a/ARnL2Fc6ui7KGxlH99inurMkN.svg)](https://asciinema.org/a/ARnL2Fc6ui7KGxlH99inurMkN)
-
-## Install and run Tree difference generator in Plain format
-
-[![asciicast](https://asciinema.org/a/VZPVDnJEFyQyMIbV6dBgDZRZx.svg)](https://asciinema.org/a/VZPVDnJEFyQyMIbV6dBgDZRZx)
-
-## Install and run Tree difference generator in JSON format
-
-[![asciicast](https://asciinema.org/a/Q3EQEhd1VOyjoWHaUu516UcLe.svg)](https://asciinema.org/a/Q3EQEhd1VOyjoWHaUu516UcLe)
+Options:
+  -V, --version        output the version number
+  -f, --format [type]  Output formats: standard, plain, json
+  -h, --help           output usage information
