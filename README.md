@@ -1,5 +1,9 @@
 # Difference Calculator
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/a3f977a8261b4408be88/maintainability)](https://codeclimate.com/github/CoraloReef/project-lvl2-s463/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/a3f977a8261b4408be88/test_coverage)](https://codeclimate.com/github/CoraloReef/project-lvl2-s463/test_coverage)
+[![Build Status](https://travis-ci.org/CoraloReef/project-lvl2-s463.svg?branch=master)](https://travis-ci.org/CoraloReef/project-lvl2-s463)
+
 ### Description
 Utility to find differences in configuration files.
 
@@ -12,7 +16,7 @@ Utility features:
 ### Installation
 
 ```
-npm install difference-calculator-coraloreef -global
+npm install gendiff-bukharovev -global
 ```
 
 ### Usage
