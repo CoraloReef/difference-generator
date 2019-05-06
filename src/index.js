@@ -4,7 +4,7 @@ import path from 'path';
 import render from './formatters';
 import parsers from './parsers';
 
-const getObjectPathFile = (pathFile) => {
+const getObjectFrom = (pathFile) => {
   const fileContent = fs.readFileSync(pathFile, 'utf-8');
   return parsers(path.extname(pathFile), fileContent);
 };
@@ -54,8 +54,8 @@ const getAst = (objFirst, objSecond) => {
 };
 
 export default (firstPathFile, secondPathFile, outputFormat = 'cascade') => {
-  const objFirst = getObjectPathFile(firstPathFile);
-  const objSecond = getObjectPathFile(secondPathFile);
+  const objFirst = getObjectFrom(firstPathFile);
+  const objSecond = getObjectFrom(secondPathFile);
   const ast = getAst(objFirst, objSecond);
   return render(ast, outputFormat);
 };
