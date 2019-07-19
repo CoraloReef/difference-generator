@@ -1,8 +1,8 @@
 # Difference Calculator
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/a3f977a8261b4408be88/maintainability)](https://codeclimate.com/github/CoraloReef/project-lvl2-s463/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/a3f977a8261b4408be88/test_coverage)](https://codeclimate.com/github/CoraloReef/project-lvl2-s463/test_coverage)
-[![Build Status](https://travis-ci.org/CoraloReef/project-lvl2-s463.svg?branch=master)](https://travis-ci.org/CoraloReef/project-lvl2-s463)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a3f977a8261b4408be88/maintainability)](https://codeclimate.com/github/CoraloReef/difference-generator/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/a3f977a8261b4408be88/test_coverage)](https://codeclimate.com/github/CoraloReef/difference-generator/test_coverage)
+[![Build Status](https://travis-ci.org/CoraloReef/difference-generator.svg?branch=master)](https://travis-ci.org/CoraloReef/difference-generator)
 
 ### Description
 Utility to find differences in configuration files.
