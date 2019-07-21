@@ -16,7 +16,7 @@ Utility features:
 ### Installation
 
 ```
-npm install gendiff-bukharovev -global
+npm install difference-calculator-coraloreef -global
 ```
 
 ### Usage
