@@ -16,7 +16,7 @@ Utility features:
 ### Installation
 
 ```
-npm install difference-calculator-coraloreef -global
+npm install difference-calculator-coraloreef -g
 ```
 
 ### Usage
