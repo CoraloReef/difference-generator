@@ -1,6 +1,6 @@
 {
   "name": "difference-calculator-coraloreef",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Difference calculator",
   "keywords": [
     "difference",
@@ -20,17 +20,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CoraloReef/project-lvl2-s463.git"
+    "url": "git+https://github.com/CoraloReef/difference-generator.git"
   },
   "author": "Viacheslav Gordeiko",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/CoraloReef/project-lvl2-s463/issues"
+    "url": "https://github.com/CoraloReef/difference-generator/issues"
   },
   "jest": {
     "testEnvironment": "node"
   },
-  "homepage": "https://github.com/CoraloReef/project-lvl2-s463#readme",
+  "homepage": "https://github.com/CoraloReef/difference-generator#readme",
   "devDependencies": {
     "@babel/cli": "^7.4.3",
     "@babel/core": "^7.4.3",
