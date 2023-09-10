@@ -1,3 +1,5 @@
+import * as _ from 'lodash/fp';
+
 import { LineStatus } from '../types';
 
 const getIndent = (depth: number): string => '  '.repeat(depth);
@@ -10,17 +12,15 @@ const stringify = (value: any, depth: number): string => {
 };
 
 const lineStatus: Record<string, (...args: any[]) => string> = {
-    added: (key, depth, value) => `${getIndent(depth)}+ ${key}: ${stringify(value, depth)}`,
-    removed: (key, depth, value) => `${getIndent(depth)}- ${key}: ${stringify(value, depth)}`,
-    notChanged: (key, depth, value) => `${getIndent(depth)}  ${key}: ${stringify(value, depth)}`,
-    changed: (key, depth, value, valueOld, valueNew) => {
-        const oldValue = stringify(valueOld, depth + 1);
-        const newValue = stringify(valueNew, depth + 1);
-        return [
-            `${getIndent(depth)}- ${key}: ${oldValue}`,
-            `${getIndent(depth)}+ ${key}: ${newValue}`,
-        ].join('\n');
-    },
+    added: ((key, depth, value) => `${getIndent(depth)}+ ${key}: ${stringify(value, depth)}`),
+    removed: ((key, depth, value) => `${getIndent(depth)}- ${key}: ${stringify(value, depth)}`),
+    notChanged: ((key, depth, value) => `${getIndent(depth)}  ${key}: ${stringify(value, depth)}`),
+    // TODO: fix types
+    //@ts-ignore
+    changed: ((key, depth, value, valueOld, valueNew) => [
+        `${getIndent(depth)}- ${key}: ${stringify(valueOld, depth)}`,
+        `${getIndent(depth)}+ ${key}: ${stringify(valueNew, depth)}`,
+    ]),
     parent: ((key, depth, value, valueOld, valueNew, children, getLines) => `${getIndent(depth + 1)}${key}: ${getLines(children, depth + 1)}`),
 };
 
@@ -34,20 +34,11 @@ const repareLine = (item: LineStatus, depth: number, getLines: ((ast: LineStatus
         status,
     } = item;
 
-    const handler = lineStatus[status];
-    if (handler) {
-        if (status === 'parent') {
-            return handler(key, depth, value, valueOld, valueNew, children, getLines);
-        } else {
-            return handler(key, depth, value, valueOld, valueNew);
-        }
-    }
-
-    return '';
+    return lineStatus[status](key, depth, value, valueOld, valueNew, children, getLines);
 };
 
 const getLines = (ast: LineStatus[], depth = 0): string => {
-    const lines = ast.map((item) => repareLine(item, depth + 1, getLines as ((ast: LineStatus[], depth: number) => string) | undefined));
+    const lines = _.flatten(ast.map(item => repareLine(item, depth + 1, getLines)));
     return ['{', ...lines, `${getIndent(depth)}}`].join('\n');
 };
 
