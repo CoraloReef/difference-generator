@@ -1,0 +1,16 @@
+{
+    "editor.tabSize": 4,
+    "files.exclude": {
+        "**/.git": true,
+        "**/node_modules": false
+    },
+    "editor.defaultFormatter": "rvest.vs-code-prettier-eslint",
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": false,
+    "editor.formatOnSave": true,
+    "editor.formatOnSaveMode": "file",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true
+    },
+    "eslint.format.enable": true
+}
