@@ -1,22 +1,18 @@
----
-
+extends:
+  - airbnb-base
+  - plugin:jest/recommended
+  - prettier
+  - plugin:prettier/recommended
 plugins:
-  # https://github.com/jest-community/eslint-plugin-jest
+  - import
+  - json
   - jest
-  # https://github.com/babel/eslint-plugin-babel
-  - babel
-
-# https://eslint.org/docs/user-guide/configuring#specifying-environments
+parserOptions:
+  ecmaVersion: 2018
 env:
   node: true
   jest: true
-
-# https://github.com/babel/babel-eslint
-parser: babel-eslint
-
-extends:
-  - 'airbnb-base'
-  - 'plugin:jest/recommended'
-
 rules:
-  no-console: 0
+  import/prefer-default-export: off
+  import/no-default-export: off
+  no-console: warn
