@@ -1,11 +1,11 @@
-const repareValue = (value: unknown): string => {
-    if (typeof value === 'object' && value !== null) {
+const repareValue = (value: unknown): string | {} | undefined => {
+    if (typeof value === 'object') {
         return '[complex value]';
     }
     if (typeof value === 'string') {
         return `'${value}'`;
     }
-    return String(value || '');
+    return value;
 };
 
 const repareParent = (parent: string): string => (parent ? `${parent}.` : '');
