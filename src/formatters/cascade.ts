@@ -11,12 +11,10 @@ const stringify = (value: any, depth: number): string => {
     return `{\n${Object.keys(value).map(key => `${getIndent(depth + 3)}${key}: ${value[key]}`)}\n${getIndent(depth + 1)}}`;
 };
 
-const lineStatus: Record<string, (...args: any[]) => string> = {
+const lineStatus: Record<string, (...args: any[]) => string | string[]> = {
     added: ((key, depth, value) => `${getIndent(depth)}+ ${key}: ${stringify(value, depth)}`),
     removed: ((key, depth, value) => `${getIndent(depth)}- ${key}: ${stringify(value, depth)}`),
     notChanged: ((key, depth, value) => `${getIndent(depth)}  ${key}: ${stringify(value, depth)}`),
-    // TODO: fix types
-    //@ts-ignore
     changed: ((key, depth, value, valueOld, valueNew) => [
         `${getIndent(depth)}- ${key}: ${stringify(valueOld, depth)}`,
         `${getIndent(depth)}+ ${key}: ${stringify(valueNew, depth)}`,
@@ -24,7 +22,11 @@ const lineStatus: Record<string, (...args: any[]) => string> = {
     parent: ((key, depth, value, valueOld, valueNew, children, getLines) => `${getIndent(depth + 1)}${key}: ${getLines(children, depth + 1)}`),
 };
 
-const repareLine = (item: LineStatus, depth: number, getLines: ((ast: LineStatus[], depth: number) => string) | undefined): string => {
+const repareLine = (
+    item: LineStatus,
+    depth: number,
+    getLines: ((ast: LineStatus[], depth: number) => string) | undefined,
+): string | string[] => {
     const {
         key,
         children,

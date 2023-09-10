@@ -6,4 +6,4 @@ module.exports = {
     testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$',
     preset: 'ts-jest',
     testEnvironment: 'node',
-};
+}
