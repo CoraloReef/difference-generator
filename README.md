@@ -1,7 +1,6 @@
 # Difference Calculator
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/a3f977a8261b4408be88/maintainability)](https://codeclimate.com/github/CoraloReef/difference-generator/maintainability)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/a3f977a8261b4408be88/test_coverage)](https://codeclimate.com/github/CoraloReef/difference-generator/test_coverage)
 
 ### Description
 Utility to find differences in configuration files.
